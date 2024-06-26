@@ -1,3 +1,7 @@
+/**
+ * Represents the Home page component.
+ * @component
+ */
 import { useContext } from "react";
 import { UserContext } from "../context";
 

@@ -3,6 +3,12 @@ import Link from "next/link";
 import { UserContext } from "../context";
 import { useRouter } from "next/router";
 
+/**
+ * Navigation component for the Friendbook application.
+ * Renders the navigation bar with links based on the user's authentication state.
+ *
+ * @returns {JSX.Element} The rendered navigation bar.
+ */
 const Nav = () => {
   const [current, setCurrent] = useState("");
   const [state, setState] = useContext(UserContext);
@@ -13,6 +19,10 @@ const Nav = () => {
 
   const router = useRouter();
 
+  /**
+   * Logs out the user by removing the "auth" item from the local storage,
+   * resetting the state, and redirecting to the login page.
+   */
   const logout = () => {
     window.localStorage.removeItem("auth");
     setState(null);

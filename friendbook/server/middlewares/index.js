@@ -8,6 +8,14 @@ export const requireSignin  = expressjwt({
 
 module.exports = requireSignin;
 
+/**
+ * Middleware function to check if the authenticated user can edit or delete a post.
+ *
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @param {Function} next - The next middleware function.
+ * @returns {void}
+ */
 export const canEditDeletePost = async (req, res, next) => {
   try {
     const post = await Post.findById(req.params._id);

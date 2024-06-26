@@ -1,3 +1,8 @@
+/**
+ * Register page component.
+ * @module Register
+ */
+
 import { useState, useContext } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -6,6 +11,10 @@ import Link from "next/link";
 import { UserContext } from "../context";
 import { useRouter } from "next/router";
 
+/**
+ * Register page component.
+ * @returns {JSX.Element} Register page JSX element.
+ */
 const Register = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -17,11 +26,14 @@ const Register = () => {
   const [state] = useContext(UserContext);
   const router = useRouter();
 
+  /**
+   * Handles the form submission.
+   * @param {Event} e - The form submit event.
+   */
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       setLoading(true);
-      // console.log(name, email, password, secret);
       const { data } = await axios.post(`/register`, {
         name,
         email,
@@ -53,7 +65,7 @@ const Register = () => {
 
       <div className="row py-5">
         <div className="col-md-6 offset-md-3">
-        <AuthForm
+          <AuthForm
             handleSubmit={handleSubmit}
             name={name}
             setName={setName}
@@ -72,12 +84,11 @@ const Register = () => {
           <p className="text-center">
             Already registered?{" "}
             <Link href="/login">
-               Login 
+              Login
             </Link>
           </p>
         </div>
       </div>
-
     </div>
   );
 };

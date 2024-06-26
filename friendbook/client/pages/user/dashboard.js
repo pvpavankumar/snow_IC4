@@ -1,3 +1,8 @@
+/**
+ * Represents the dashboard page for a user.
+ * @module pages/user/dashboard
+ */
+
 import { useContext, useState, useEffect } from "react";
 import { UserContext } from "../../context";
 import UserRoute from "../../components/routes/UserRoute";
@@ -9,34 +14,45 @@ import PostList from "../../components/cards/PostList";
 import People from "../../components/cards/People";
 import Link from "next/link";
 
+/**
+ * Represents the Home component.
+ * @returns {JSX.Element} The Home component.
+ */
 const Home = () => {
   const [state, setState] = useContext(UserContext);
-   // state
-   const [content, setContent] = useState("");
+  // state
+  const [content, setContent] = useState("");
   // posts
   const [posts, setPosts] = useState([]);
   // people
   const [people, setPeople] = useState([]);
-   // route
-   const router = useRouter();
+  // route
+  const router = useRouter();
 
-   useEffect(() => {
+  useEffect(() => {
     if (state && state.token) {
       newsFeed();
       findPeople();
     }
   }, [state && state.token]);
 
+  /**
+   * Fetches the news feed posts.
+   * @returns {Promise<void>} A Promise that resolves when the news feed posts are fetched.
+   */
   const newsFeed = async () => {
     try {
       const { data } = await axios.get("/news-feed");
-      //console.log("user posts => ", data);
       setPosts(data);
     } catch (err) {
       console.log(err);
     }
   };
 
+  /**
+   * Fetches the suggested people to follow.
+   * @returns {Promise<void>} A Promise that resolves when the suggested people are fetched.
+   */
   const findPeople = async () => {
     try {
       const { data } = await axios.get("/find-people");
@@ -45,13 +61,16 @@ const Home = () => {
       console.log(err);
     }
   };
- 
-   const postSubmit = async (e) => {
+
+  /**
+   * Handles the submission of a new post.
+   * @param {Event} e - The submit event.
+   * @returns {Promise<void>} A Promise that resolves when the post is submitted.
+   */
+  const postSubmit = async (e) => {
     e.preventDefault();
-    // console.log("post => ", content);
     try {
       const { data } = await axios.post("/create-post", { content });
-      console.log("create post response => ", data);
       if (data.error) {
         toast.error(data.error);
       } else {
@@ -64,30 +83,35 @@ const Home = () => {
     }
   };
 
+  /**
+   * Handles the deletion of a post.
+   * @param {Object} post - The post to be deleted.
+   * @returns {Promise<void>} A Promise that resolves when the post is deleted.
+   */
   const handleDelete = async (post) => {
     try {
       const answer = window.confirm("Are you sure you want to Delete?");
       if (!answer) return;
       const { data } = await axios.delete(`/delete-post/${post._id}`);
       toast.error("Post deleted");
-      newsFeed(); // to optimize the code we can filter all the posts which are in state and based on id keep all the posts except deleted one
+      newsFeed();
     } catch (err) {
       console.log(err);
     }
   };
 
+  /**
+   * Handles the follow action on a user.
+   * @param {Object} user - The user to be followed.
+   * @returns {Promise<void>} A Promise that resolves when the user is followed.
+   */
   const handleFollow = async (user) => {
-    //console.log("add this user to following list ", user);
     try {
       const { data } = await axios.put("/user-follow", { _id: user._id });
-      //console.log("handle follow response => ", data);
-       // update local storage, update user, keep token
-       let auth = JSON.parse(localStorage.getItem("auth"));
-       auth.user = data;
-       localStorage.setItem("auth", JSON.stringify(auth));
-       // update context
-       setState({ ...state, user: data });
-        // update people state
+      let auth = JSON.parse(localStorage.getItem("auth"));
+      auth.user = data;
+      localStorage.setItem("auth", JSON.stringify(auth));
+      setState({ ...state, user: data });
       let filtered = people.filter((p) => p._id !== user._id);
       setPeople(filtered);
       newsFeed();
@@ -97,33 +121,41 @@ const Home = () => {
     }
   };
 
+  /**
+   * Handles sending a friend request to a user.
+   * @param {Object} user - The user to send the friend request to.
+   * @returns {Promise<void>} A Promise that resolves when the friend request is sent.
+   */
   const handleSendFriendRequest = async (user) => {
-    console.log( user._id);
     try {
       const { data } = await axios.put("/send-friend-request", { _id: user._id });
-      //console.log("handle follow response => ", data);
-       // update local storage, update user, keep token
     } catch (err) {
       console.log(err);
     }
   };
 
+  /**
+   * Handles the like action on a post.
+   * @param {string} _id - The ID of the post to be liked.
+   * @returns {Promise<void>} A Promise that resolves when the post is liked.
+   */
   const handleLike = async (_id) => {
-    // console.log("like this post => ", _id);
     try {
       const { data } = await axios.put("/like-post", { _id });
-      console.log("liked", data);
       newsFeed();
     } catch (err) {
       console.log(err);
     }
   };
 
+  /**
+   * Handles the unlike action on a post.
+   * @param {string} _id - The ID of the post to be unliked.
+   * @returns {Promise<void>} A Promise that resolves when the post is unliked.
+   */
   const handleUnlike = async (_id) => {
-    // console.log("unlike this post => ", _id);
     try {
       const { data } = await axios.put("/unlike-post", { _id });
-      console.log("unliked", data);
       newsFeed();
     } catch (err) {
       console.log(err);
@@ -133,7 +165,7 @@ const Home = () => {
   return (
     <UserRoute>
       <div className="container-fluid">
-      <div className="row py-5 text-light bg-default-image">
+        <div className="row py-5 text-light bg-default-image">
           <div className="col text-center">
             <h1>Time Line</h1>
           </div>
@@ -145,22 +177,26 @@ const Home = () => {
               setContent={setContent}
               postSubmit={postSubmit}
             />
-             <br />
-             <PostList posts={posts}
+            <br />
+            <PostList
+              posts={posts}
               handleDelete={handleDelete}
               handleLike={handleLike}
-              handleUnlike={handleUnlike}/>
+              handleUnlike={handleUnlike}
+            />
           </div>
           <div className="col-md-4">
-          {state && state.user && state.user.following && (
+            {state && state.user && state.user.following && (
               <Link className="label" href={`/user/following`}>
                 Following {state.user.following.length} users
               </Link>
             )}
-          <People people={people} 
-          handleFollow={handleFollow} 
-          handleSendFriendRequest ={handleSendFriendRequest}/>
-            </div>
+            <People
+              people={people}
+              handleFollow={handleFollow}
+              handleSendFriendRequest={handleSendFriendRequest}
+            />
+          </div>
         </div>
       </div>
     </UserRoute>

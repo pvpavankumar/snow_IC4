@@ -1,3 +1,6 @@
+/**
+ * Component for displaying the list of users that the current user is following.
+ */
 import { useContext, useState, useEffect } from "react";
 import { Avatar, List } from "antd/lib";
 import moment from "moment";
@@ -19,11 +22,19 @@ const Following = () => {
     if (state && state.token) fetchFollowing();
   }, [state && state.token]);
 
+  /**
+   * Capitalizes the first letter of a string.
+   * @param {string} string - The input string.
+   * @returns {string} The input string with the first letter capitalized.
+   */
   const capitalizeFirstLetter = (string) => {
     if (!string) return ''; // Handle empty strings
     return string.charAt(0).toUpperCase();
   };
 
+  /**
+   * Fetches the list of users that the current user is following.
+   */
   const fetchFollowing = async () => {
     try {
       const { data } = await axios.get("/user-following");
@@ -34,8 +45,10 @@ const Following = () => {
     }
   };
 
- 
-
+  /**
+   * Handles the unfollow action for a user.
+   * @param {object} user - The user object to unfollow.
+   */
   const handleUnfollow = async (user) => {
     try {
       const { data } = await axios.put("/user-unfollow", { _id: user._id });
@@ -62,9 +75,9 @@ const Following = () => {
         renderItem={(user) => (
           <List.Item>
             <List.Item.Meta
-             avatar={<Avatar size={40} style={{ backgroundColor: '#87d068' }}>
-             {capitalizeFirstLetter(user.name[0])}
-             </Avatar>}
+              avatar={<Avatar size={40} style={{ backgroundColor: '#87d068' }}>
+                {capitalizeFirstLetter(user.name[0])}
+              </Avatar>}
               title={
                 <div className="d-flex justify-content-between">
                   {user.name}{" "}
@@ -82,7 +95,7 @@ const Following = () => {
       />
 
       <Link href="/user/dashboard" className="d-flex justify-content-center pt-5">
-          <RollbackOutlined />
+        <RollbackOutlined />
       </Link>
     </div>
   );

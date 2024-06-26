@@ -5,19 +5,25 @@ import PostForm from "../../../components/forms/PostForm";
 import UserRoute from "../../../components/routes/UserRoute";
 import { toast } from "react-toastify";
 
+/**
+ * Component for editing a post.
+ * @returns {JSX.Element} The EditPost component.
+ */
 const EditPost = () => {
   const [post, setPost] = useState({});
   // state
   const [content, setContent] = useState("");
 
   const router = useRouter();
-  //   console.log("router", router);
   const _id = router.query._id;
 
   useEffect(() => {
     if (_id) fetchPost();
   }, [_id]);
 
+  /**
+   * Fetches the post data from the server.
+   */
   const fetchPost = async () => {
     try {
       const { data } = await axios.get(`/user-post/${_id}`);
@@ -28,6 +34,10 @@ const EditPost = () => {
     }
   };
 
+  /**
+   * Handles the form submission for editing the post.
+   * @param {Event} e - The form submit event.
+   */
   const postSubmit = async (e) => {
     e.preventDefault();
     try {

@@ -1,3 +1,19 @@
+/**
+ * AuthForm component for handling user authentication.
+ *
+ * @param {Object} props - The component props.
+ * @param {Function} props.handleSubmit - The function to handle form submission.
+ * @param {string} props.name - The user's name.
+ * @param {Function} props.setName - The function to update the user's name.
+ * @param {string} props.email - The user's email address.
+ * @param {Function} props.setEmail - The function to update the user's email address.
+ * @param {string} props.password - The user's password.
+ * @param {Function} props.setPassword - The function to update the user's password.
+ * @param {string} props.secret - The user's secret answer.
+ * @param {Function} props.setSecret - The function to update the user's secret answer.
+ * @param {string} props.page - The current page of the form.
+ * @returns {JSX.Element} The rendered AuthForm component.
+ */
 const AuthForm = ({
   handleSubmit,
   name,

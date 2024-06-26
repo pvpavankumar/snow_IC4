@@ -1,8 +1,13 @@
 import Post from "../models/post";
 import User from "../models/user";
 
+/**
+ * Create a new post.
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @returns {Object} The created post.
+ */
 export const createPost = async (req, res) => {
-  //   console.log("post => ", req.body);
   const { content } = req.body;
   if (!content.length) {
     return res.json({
@@ -19,9 +24,14 @@ export const createPost = async (req, res) => {
   }
 };
 
+/**
+ * Get posts by a specific user.
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @returns {Array} The posts by the user.
+ */
 export const postsByUser = async (req, res) => {
   try {
-    //const posts = await Post.find({ postedBy: req.auth._id })
     const posts = await Post.find()
       .populate("postedBy", "_id name")
       .sort({ createdAt: -1 })
@@ -33,6 +43,12 @@ export const postsByUser = async (req, res) => {
   }
 };
 
+/**
+ * Get a specific post by its ID.
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @returns {Object} The post.
+ */
 export const userPost = async (req, res) => {
   try {
     const post = await Post.findById(req.params._id);
@@ -42,8 +58,13 @@ export const userPost = async (req, res) => {
   }
 };
 
+/**
+ * Update a specific post by its ID.
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @returns {Object} The updated post.
+ */
 export const updatePost = async (req, res) => {
-  // console.log("post update controller => ", req.body);
   try {
     const post = await Post.findByIdAndUpdate(req.params._id, req.body, {
       new: true,
@@ -54,6 +75,12 @@ export const updatePost = async (req, res) => {
   }
 };
 
+/**
+ * Delete a specific post by its ID.
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @returns {Object} The result of the deletion.
+ */
 export const deletePost = async (req, res) => {
   try {
     const post = await Post.findByIdAndDelete(req.params._id);
@@ -63,6 +90,12 @@ export const deletePost = async (req, res) => {
   }
 };
 
+/**
+ * Get the news feed of posts for the authenticated user.
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @returns {Array} The news feed posts.
+ */
 export const newsFeed = async (req, res) => {
   try {
     const user = await User.findById(req.auth._id);
@@ -74,7 +107,7 @@ export const newsFeed = async (req, res) => {
       .sort({ createdAt: -1 })
       .limit(10);
 
-      console.log('news-feed', posts);
+    console.log('news-feed', posts);
 
     res.json(posts);
   } catch (err) {
@@ -82,6 +115,12 @@ export const newsFeed = async (req, res) => {
   }
 };
 
+/**
+ * Like a specific post.
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @returns {Object} The updated post with the like.
+ */
 export const likePost = async (req, res) => {
   try {
     const post = await Post.findByIdAndUpdate(
@@ -97,6 +136,12 @@ export const likePost = async (req, res) => {
   }
 };
 
+/**
+ * Unlike a specific post.
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @returns {Object} The updated post without the like.
+ */
 export const unlikePost = async (req, res) => {
   try {
     const post = await Post.findByIdAndUpdate(

@@ -4,6 +4,14 @@ import { useRouter } from "next/router";
 
 const UserContext = createContext();
 
+/**
+ * UserProvider component provides user context to its children.
+ *
+ * @component
+ * @param {Object} props - The component props.
+ * @param {ReactNode} props.children - The child components.
+ * @returns {ReactNode} The rendered component.
+ */
 const UserProvider = ({ children }) => {
   const [state, setState] = useState({
     user: {},

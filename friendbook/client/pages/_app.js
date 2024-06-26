@@ -1,3 +1,10 @@
+/**
+ * Main application component.
+ * @param {Object} props - The component props.
+ * @param {React.Component} props.Component - The component to render.
+ * @param {Object} props.pageProps - The page props.
+ * @returns {React.Component} The rendered component.
+ */
 import { UserProvider } from "../context";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Nav from "../components/Nav";
