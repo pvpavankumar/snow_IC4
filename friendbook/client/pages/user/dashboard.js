@@ -13,6 +13,7 @@ import { toast } from "react-toastify";
 import PostList from "../../components/cards/PostList";
 import People from "../../components/cards/People";
 import Link from "next/link";
+import {TeamOutlined} from "@ant-design/icons/lib";
 
 /**
  * Represents the Home component.
@@ -187,8 +188,9 @@ const Home = () => {
           </div>
           <div className="col-md-4">
             {state && state.user && state.user.following && (
-              <Link className="label" href={`/user/following`}>
-                Following {state.user.following.length} users
+              
+              <Link className="following-count" href={`/user/following`}>
+                <TeamOutlined className="px-1"/>Following {state.user.following.length} users
               </Link>
             )}
             <People

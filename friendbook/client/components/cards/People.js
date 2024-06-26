@@ -37,7 +37,7 @@ const People = ({ people, handleFollow, handleSendFriendRequest }) => {
         itemLayout="horizontal"
         dataSource={people}
         renderItem={(user) => (
-          <List.Item>
+            <List.Item>
             <List.Item.Meta
               avatar={
                 <Avatar size={40} style={{ backgroundColor: '#87d068' }}>
@@ -46,7 +46,7 @@ const People = ({ people, handleFollow, handleSendFriendRequest }) => {
               }
               title={
                 <div className="d-flex justify-content-between">
-                  {user.name} 
+                 <span className="py-1">{user.name} </span> 
                   <span 
                     className="btn btn-primary"
                     onClick={() => handleFollow(user)}
