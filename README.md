@@ -15,7 +15,7 @@ Forgot password
 Friend Request
 Comments
 
-# Installation steps
+# Dependencies explained
 
 @ant-design/icons and antd: These packages are part of Ant Design, a popular design framework for React applications. @ant-design/icons provides a wide range of icons, while antd offers a comprehensive library of UI components. These make it easier to build complex, interactive, and visually appealing user interfaces with consistency.
 
