@@ -170,7 +170,7 @@ const Home = () => {
             <h1>Time Line</h1>
           </div>
         </div>
-        <div className="row py-3">
+        <div className="row py-3" style={{ backgroundColor: '#F0F2F5' }}>
           <div className="col-md-8">
             <PostForm
               content={content}

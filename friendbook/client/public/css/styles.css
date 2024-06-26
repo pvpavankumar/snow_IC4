@@ -17,3 +17,10 @@ img {
 .pointer {
     cursor: pointer;
   }
+
+  .peoples-suggestions {
+    margin-top: 10px;
+    border-radius: 5px;
+    padding: 20px;
+    background: #fff;
+  }

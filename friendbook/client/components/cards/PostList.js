@@ -34,7 +34,7 @@ const PostList = ({ posts, handleDelete, handleLike, handleUnlike }) => {
       {posts &&
         posts.map((post) => (
           <div key={post._id} className="card mb-5">
-            <div className="card-header">
+            <div className="card-header" style={{ backgroundColor: "#fff" }}>
               <Avatar size={40} style={{ backgroundColor: '#87d068' }}>
                 {capitalizeFirstLetter(post.postedBy.name[0])}
               </Avatar> {" "}
@@ -49,7 +49,7 @@ const PostList = ({ posts, handleDelete, handleLike, handleUnlike }) => {
             <div className="card-body">
               {renderHTML(post.content)}
             </div>
-            <div className="card-footer ">
+            <div className="card-footer" style={{ backgroundColor: "#fff" }}>
               <div className="d-flex pt-3">
                 {post.likes.includes(state.user._id) ? (
                   <LikeFilled

@@ -95,7 +95,7 @@ const Following = () => {
       />
 
       <Link href="/user/dashboard" className="d-flex justify-content-center pt-5">
-        <RollbackOutlined />
+        BACK TO DASHBOARD
       </Link>
     </div>
   );

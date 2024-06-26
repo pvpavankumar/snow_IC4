@@ -33,6 +33,7 @@ const People = ({ people, handleFollow, handleSendFriendRequest }) => {
   return (
     <>
       <List
+      className = "peoples-suggestions"
         itemLayout="horizontal"
         dataSource={people}
         renderItem={(user) => (

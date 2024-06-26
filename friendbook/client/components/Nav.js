@@ -31,7 +31,7 @@ const Nav = () => {
 
   return (
     <nav className="nav d-flex justify-content-between"  
-    style={{ backgroundColor: "blue" }}>
+    style={{ backgroundColor: "#0866FF" }}>
       <Link  className={`nav-link text-light logo ${current === "/" && "active"}`}
        href="/">
         FRIENDBOOK

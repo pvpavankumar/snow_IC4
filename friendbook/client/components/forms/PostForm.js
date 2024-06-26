@@ -30,10 +30,10 @@ const PostForm = ({ content, setContent, postSubmit }) => {
               </form>
             </div>
       
-            <div className="card-footer">
+            <div className="card-footer" style={{ backgroundColor: '#FFF' }}>
               <button  disabled={!content}
               onClick={postSubmit} 
-              className="btn btn-primary btn-sm mt-1">
+              className="btn btn-primary px-4 mt-1">
                 Post
               </button>
             </div>
