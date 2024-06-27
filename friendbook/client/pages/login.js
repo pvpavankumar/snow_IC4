@@ -52,13 +52,13 @@ const Login = () => {
 
   return (
     <div className="container-fluid">
-      <div className="row py-5 text-light bg-default-image">
+      <div className="row pt-5 text-dark">
         <div className="col text-center">
           <h1>Login</h1>
         </div>
       </div>
 
-      <div className="row py-5">
+      <div className="row pb-5">
         <div className="col-md-6 offset-md-3">
           <AuthForm
             handleSubmit={handleSubmit}
@@ -76,7 +76,7 @@ const Login = () => {
         <div className="col">
           <p className="text-center">
             Not yet registered?{" "}
-            <Link href="/register">
+            <Link className="btn btn-success" href="/register">
               Register
             </Link>
           </p>

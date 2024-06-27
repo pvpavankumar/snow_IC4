@@ -49,11 +49,15 @@ express-jwt: This is middleware for Express applications that validates JSON Web
 
 jsonwebtoken: A package for implementing JWT authentication. JWTs are a method for securely transmitting information between parties as a JSON object. This package allows you to sign, verify, and decode JWTs in your application.
 
-latest: This package seems to be an outlier and might be included by mistake or for a specific, less common use case. Typically, dependencies are named after their function or the library they provide, but "latest" is ambiguous without further context.
-
 mongodb: The official MongoDB driver for Node.js. It provides a high-level API to interact with MongoDB databases, allowing you to perform CRUD operations, manage connections, and use MongoDB's features directly from your Node.js application.
 
 mongoose: A MongoDB object modeling tool designed to work in an asynchronous environment. Mongoose provides a straight-forward, schema-based solution to model your application data. It includes built-in type casting, validation, query building, and business logic hooks.
+
+# Why the MERN stack
+MERN uses JavaScript for both client-side and server-side code which simplified the development process
+
+MongoDB allows for a flexible schema design. This is beneficial for social media applications where data structures can evolve rapidly.Data is stored in a JSON-like format (BSON), making it easy to work with in JavaScript.
+
 
 
 # Installation steps
@@ -85,3 +89,98 @@ Start the Server: To launch the server, run:
 npm run start
 
 This will start the server on http://localhost:8000
+
+# EACH TIME USER FOLLOW/UNFOLLOW, 2 ACTIONS WILL BE EXECUTED ON BOTH USER'S SIDE
+
+IF PAVAN FOLLOWS KUMAR
+======================
+pavan (is following kumar)
+    following['kumar_id']
+
+kumar (got pavan as a follower)
+    followers['pavan_id']
+
+IF KUMAR ALSO FOLLOWS PAVAN BACK
+================================
+pavan
+    following['kumar_id']
+    follower['kumar_id']
+
+kumar
+    followers['pavan_id']
+    following['pavan_id']
+
+#Approach tried for Friend/UnFriend 
+===================================
+Pavan friends Kumar
+Pavan = {
+    "friend_requests_sent": [],
+    "friends": []
+}
+
+Kumar = {
+    "friend_requests_received": [],
+    "friends": []
+}
+
+Step 1: Pavan sends a friend request to Kumar
+Pavan["friend_requests_sent"].append("Kumar_id")
+Kumar["friend_requests_received"].append("Pavan_id")
+
+Step 2: Kumar accepts the friend request
+Pavan["friends"].append("Kumar_id")
+Pavan["friend_requests_sent"].remove("Kumar_id")
+
+Kumar["friends"].append("Pavan_id")
+Kumar["friend_requests_received"].remove("Pavan_id")
+
+
+Pavan unfriends Kumar
+Pavan = {
+    "friends": ["Kumar_id"]
+}
+
+Kumar = {
+    "friends": ["Pavan_id"]
+}
+
+Pavan initiates an unfriend action
+Pavan["friends"].remove("Kumar_id")
+Kumar["friends"].remove("Pavan_id")
+
+# User Model
+Fields:
+name: User's name.
+email: User's email, which must be unique.
+password: User's password, with a defined length range.
+secret: User's secret question or hint.
+about: Optional field for user description.
+photo: Optional field for storing user profile picture URL.
+following: List of users this user is following.
+followers: List of users following this user.
+friends: List of users who are friends with this user.
+friendRequestsSent: List of users to whom friend requests have been sent.
+friendRequestsReceived: List of users from whom friend requests have been received.
+Options:
+timestamps: Automatically generates createdAt and updatedAt fields.
+
+# Post Model
+Fields:
+content: The main content of the post.
+postedBy: Reference to the user who created the post.
+image: Optional field for storing image URL and public ID.
+likes: List of users who liked the post.
+comments: List of comments on the post, each with text, creation date, and reference to the user who posted the comment.
+Options:
+timestamps: Automatically generates createdAt and updatedAt fields.
+
+# Considerations for this Schema
+postedBy in Post references the User model, ensuring each post is linked to its creator.
+likes and comments.postedBy reference the User model, tracking user interactions.
+
+following and followers maintain user connections for the following feature.
+friends, friendRequestsSent, and friendRequestsReceived handle friend relationships and pending requests.
+
+Indexes can be added to frequently queried fields (e.g., email, username) to improve query performance.
+
+They can allow for horizontal scaling.

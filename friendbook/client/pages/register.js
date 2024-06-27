@@ -57,13 +57,13 @@ const Register = () => {
 
   return (
     <div className="container-fluid">
-      <div className="row py-5 bg-secondary text-light bg-default-image">
+      <div className="row pt-5 pb-0">
         <div className="col text-center">
           <h1>Register</h1>
         </div>
       </div>
 
-      <div className="row py-5">
+      <div className="row pb-5">
         <div className="col-md-6 offset-md-3">
           <AuthForm
             handleSubmit={handleSubmit}
@@ -83,7 +83,7 @@ const Register = () => {
         <div className="col">
           <p className="text-center">
             Already registered?{" "}
-            <Link href="/login">
+            <Link className="btn btn-secondary" href="/login">
               Login
             </Link>
           </p>

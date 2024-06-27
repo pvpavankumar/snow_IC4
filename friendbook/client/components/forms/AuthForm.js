@@ -51,7 +51,7 @@ const AuthForm = ({
         onChange={(e) => setEmail(e.target.value)}
         type="email"
         className="form-control"
-        placeholder="Enter name"
+        placeholder="Enter email address"
       />
     </div>
 
@@ -64,7 +64,7 @@ const AuthForm = ({
         onChange={(e) => setPassword(e.target.value)}
         type="password"
         className="form-control"
-        placeholder="Enter name"
+        placeholder="Enter password"
       />
     </div>
 
@@ -97,14 +97,14 @@ const AuthForm = ({
       </>
     )}
 
-    <div className="form-group p-2">
+    <div className="form-group p-2 mt-2 text-center">
       <button
         disabled={
           page === "login"
             ? !email || !password
             : !name || !email || !secret || !password
         }
-        className="btn btn-primary col-12"
+        className="btn btn-primary col-6"
       >
         Submit
       </button>

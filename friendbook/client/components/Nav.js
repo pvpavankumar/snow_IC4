@@ -34,7 +34,7 @@ const Nav = () => {
     style={{ backgroundColor: "#0866FF" }}>
       <Link  className={`nav-link text-light logo ${current === "/" && "active"}`}
        href="/">
-        FRIENDBOOK
+        friendbook
       </Link>
 
       {state !== null ? (
