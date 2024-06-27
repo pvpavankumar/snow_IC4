@@ -60,7 +60,7 @@ export const login = async (req, res) => {
     if (!match) return res.status(400).send("Wrong password");
     // create signed token
     const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, {
-      expiresIn: "7d",
+      expiresIn: "7d",// expiry is given for seven days , can be changed
     });
     user.password = undefined;
     user.secret = undefined;

@@ -184,3 +184,30 @@ friends, friendRequestsSent, and friendRequestsReceived handle friend relationsh
 Indexes can be added to frequently queried fields (e.g., email, username) to improve query performance.
 
 They can allow for horizontal scaling.
+
+# Folder structure
+Friendbook/
+│
+├── client/                  # Client-side code (Frontend)
+│   ├── public/              # Static files
+│   │   ├── css      
+│   │   └── images 
+│   ├── components/      # Reusable UI components
+│   │   │   ├── Navbar/
+│   │   │   ├── PostCard/
+│   │   │   └── ...
+│   ├── pages/           # Application pages
+│   │   │   ├── user/..
+│   │   │   └── dashboard.js    # page to see the timeline of the user
+│   │   |   ├── index.js        # Landing page of component
+│   │   |   ├── _app.js         # Application bootstrap and rendering
+│   │   |
+│   └── package.json         # Frontend dependencies and scripts
+
+├── server/                  # Server-side code (Backend)
+│   ├── controllers/         # Route controllers (business logic)
+│   ├── models/              # Database models
+│   ├── routes/              # Application routes
+│   │   ├── userRoutes.js
+│   │   ├── postRoutes.js
+│   |── middleware/  

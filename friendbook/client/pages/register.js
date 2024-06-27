@@ -57,13 +57,8 @@ const Register = () => {
 
   return (
     <div className="container-fluid">
-      <div className="row pt-5 pb-0">
-        <div className="col text-center">
-          <h1>Register</h1>
-        </div>
-      </div>
 
-      <div className="row pb-5">
+      <div className="row py-5">
         <div className="col-md-6 offset-md-3">
           <AuthForm
             handleSubmit={handleSubmit}
