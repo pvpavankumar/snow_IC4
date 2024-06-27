@@ -6,7 +6,7 @@ Register
 Create Post within rich text editor
 Edit Post
 Delete Post
-Follow/unfollow(Tried implementing friend/unfriend faced some issues so went ahead with follow/unfollow due to the time constraints).
+Follow/unfollow(Tried implementing friend/unfriend faced some issues so went ahead with follow/unfollow).
 Like/unlike
 Filter the posts based on users followed
 
