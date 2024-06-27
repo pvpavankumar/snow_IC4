@@ -60,7 +60,7 @@ const EditPost = () => {
       <div className="container-fluid">
         <div className="row py-5 text-light bg-default-image">
           <div className="col text-center">
-            <h1>Newsfeed</h1>
+            <h1>Edit Post</h1>
           </div>
         </div>
 
