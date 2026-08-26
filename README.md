@@ -204,3 +204,15 @@ Friendbook/
 ```
 
 This README provides an overview of the features, installation steps, and the folder structure for the Snow_IC4_Friendsbook project, including explanations of the dependencies used and the data models implemented.
+
+### What problem does this solve?
+
+FriendBook is a full-stack social platform that helps users build a personalized community instead of browsing an undifferentiated list of content. Users can register securely, publish rich-text posts, discover and follow people, like content, and view a timeline filtered to posts from accounts they follow. The project demonstrates an interconnected social experience—not merely isolated CRUD screens—built with Next.js, React, Express, MongoDB, and Mongoose.
+
+### What were the technical challenges?
+
+The main challenge was maintaining relationships and consistent state across the stack. Following a user requires updating both users' follower and following collections, while likes must remain unique and the news-feed query must combine the current user's posts with posts from followed accounts. The implementation handles these cases using MongoDB references and atomic `$addToSet` and `$pull` operations, protects routes with JWT authentication, hashes passwords with bcrypt, populates author data for posts, and synchronizes authentication and feed changes between the API, React Context, and local storage.
+
+### What would I do differently?
+
+I would strengthen the project for production by enforcing ownership checks on post updates and deletions, wrapping two-user follow operations in MongoDB transactions, sanitizing rich-text HTML, and storing authentication in secure HTTP-only cookies instead of local storage. I would also introduce centralized error handling and validation, database indexes, cursor-based feed pagination, automated API and UI tests, and CI/CD checks. Finally, I would complete comments, password recovery, and friend requests, then add deployment documentation, screenshots, and a live demo to make the project easier to evaluate quickly.
