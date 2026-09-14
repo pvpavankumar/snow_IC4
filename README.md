@@ -175,6 +175,15 @@ Each time a user follows/unfollows, actions are executed on both users' sides.
   "timestamps": true
 }
 ```
+## Video Walkthroughs
+
+### Demo 1
+
+https://github.com/user-attachments/assets/64704dc9-f44b-4960-9cf1-9aedf3cc68c1
+
+### Demo 2
+
+https://github.com/user-attachments/assets/9915a5ac-998d-486a-b825-3027a5bac040
 
 ## Folder Structure
 
