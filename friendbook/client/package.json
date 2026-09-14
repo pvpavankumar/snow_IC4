@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "prebuild": "node -e \"const assert = require('node:assert/strict'); const sanitize = require('sanitize-html'); assert.equal(sanitize('<p>OK</p><script>alert(1)</script>'), '<p>OK</p>'); console.log('Sanitizer CommonJS check passed');\""
   },
   "keywords": [],
   "author": "",
@@ -28,9 +29,14 @@
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^6.13.0",
     "bcryptjs": "^3.0.2",
-    "sanitize-html": "^2.17.0"
+    "sanitize-html": "2.17.0"
   },
   "engines": {
     "node": "22.x"
+  },
+  "overrides": {
+    "sanitize-html": {
+      "htmlparser2": "8.0.2"
+    }
   }
 }
