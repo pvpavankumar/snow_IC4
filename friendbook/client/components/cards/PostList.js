@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import renderHTML from 'react-render-html';
+import sanitizeHtml from 'sanitize-html';
 import moment from "moment";
 import {Avatar} from "antd/lib";
 import {ClockCircleOutlined, LikeOutlined,LikeFilled, MessageOutlined, MessageFilled, EditOutlined, DeleteOutlined } from "@ant-design/icons/lib";
@@ -46,9 +46,7 @@ const PostList = ({ posts, handleDelete, handleLike, handleUnlike }) => {
                 <span className='ps-2'>{moment(post.createdAt).fromNow()}</span>
               </span>
             </div>
-            <div className="card-body">
-              {renderHTML(post.content)}
-            </div>
+            <div className="card-body" dangerouslySetInnerHTML={{ __html: sanitizeHtml(String(post.content || "")) }} />
             <div className="card-footer" style={{ backgroundColor: "#fff" }}>
               <div className="d-flex pt-3">
                 {post.likes.includes(state.user._id) ? (

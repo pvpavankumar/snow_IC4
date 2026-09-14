@@ -1,3 +1,4 @@
+import "react-quill/dist/quill.snow.css";
 /**
  * Main application component.
  * @param {Object} props - The component props.

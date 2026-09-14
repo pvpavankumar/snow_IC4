@@ -1,55 +1,21 @@
-/**
- * A component that renders its children only if the user is authenticated.
- * Otherwise, it redirects the user to the login page.
- *
- * @component
- * @param {Object} props - The component props.
- * @param {ReactNode} props.children - The children components to render.
- * @returns {ReactNode} - The rendered component.
- */
 import { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
 import { UserContext } from "../../context";
-
-const UserRoute = ({ children }) => {
+export default function UserRoute({ children }) {
   const [ok, setOk] = useState(false);
+  const [state, , ready] = useContext(UserContext);
   const router = useRouter();
-  const [state] = useContext(UserContext);
-
   useEffect(() => {
-    if (state && state.token) getCurrentUser();
-  }, [state && state.token]);
-
-  /**
-   * Fetches the current user's data from the server.
-   * If the request is successful, sets the `ok` state to `true`.
-   * Otherwise, redirects the user to the login page.
-   *
-   * @async
-   * @function getCurrentUser
-   * @returns {Promise<void>}
-   */
-  const getCurrentUser = async () => {
-    try {
-      const { data } = await axios.get(`/current-user`);
-      if (data.ok) setOk(true);
-    } catch (err) {
-      router.push("/login");
-    }
-  };
-
-  process.browser &&
-    state === null &&
-    setTimeout(() => {
-      getCurrentUser();
-    }, 1000);
-
-  return !ok ? (
-    "Loading"
-  ) : (
-    <> {children}</>
-  );
-};
-
-export default UserRoute;
+    let active = true;
+    setOk(false);
+    if (!ready) return;
+    if (!state?.token) { router.replace("/login"); return; }
+    // Set the token explicitly because child effects can run before provider effects.
+    axios.get("/current-user", { headers: { Authorization: `Bearer ${state.token}` } })
+      .then(({ data }) => { if (active) setOk(Boolean(data.ok)); })
+      .catch(() => { if (active) router.replace("/login"); });
+    return () => { active = false; };
+  }, [ready, state?.token, router]);
+  return ok ? <>{children}</> : <p className="text-center p-4">Loading…</p>;
+}
