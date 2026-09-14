@@ -1,7 +1,7 @@
 > **Vercel deployment:** See [deployment instructions](friendbook/client/DEPLOYMENT.md). Use `friendbook/client` as the Vercel root directory. This branch serves the frontend and API together; the separate server installation instructions below describe the original setup.
 
 # Snow_IC4_Friendsbook
-
+Weblink: https://friendsbook-jade.vercel.app/
 Snow_IC4_Friendsbook is a social media application with features such as login, registration, creating posts with a rich text editor, editing and deleting posts, following/unfollowing users, liking/unliking posts, and filtering posts based on followed users.
 
 ## Features Done
