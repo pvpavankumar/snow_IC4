@@ -43,7 +43,16 @@ const Login = () => {
       window.localStorage.setItem("auth", JSON.stringify(data));
       router.push("/user/dashboard");
     } catch (err) {
-      toast.error(typeof err.response?.data === "string" ? err.response.data : "Unable to connect. Please try again.");
+      const status = err.response?.status;
+      const body = err.response?.data;
+      const isPlainMessage = typeof body === "string" &&
+        body.trim().length > 0 && body.length <= 300 && !/[<>]/.test(body);
+      const message = !err.response
+        ? "Unable to connect. Please check your connection and try again."
+        : status >= 500
+          ? "The server could not complete your request. Please try again later."
+          : isPlainMessage ? body : "Unable to complete your request. Please try again.";
+      toast.error(message);
       setLoading(false);
     }
   };
