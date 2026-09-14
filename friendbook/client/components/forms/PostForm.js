@@ -12,7 +12,7 @@
 import dynamic from "next/dynamic";
 // ssr: Server side rendering is false since we need it only in client side
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
-import "react-quill/dist/quill.snow.css";
+
 
 // We can use props as well to read the properties here.
 const PostForm = ({ content, setContent, postSubmit }) => {

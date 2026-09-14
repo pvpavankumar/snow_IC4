@@ -1,54 +1,40 @@
 import { useState, createContext, useEffect } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
-
 const UserContext = createContext();
-
-/**
- * UserProvider component provides user context to its children.
- *
- * @component
- * @param {Object} props - The component props.
- * @param {ReactNode} props.children - The child components.
- * @returns {ReactNode} The rendered component.
- */
+axios.defaults.baseURL = process.env.NEXT_PUBLIC_API || "/api";
+axios.interceptors.request.use(config => {
+  if (typeof window !== "undefined") {
+    try {
+      const auth = JSON.parse(localStorage.getItem("auth"));
+      if (auth?.token) config.headers.Authorization = `Bearer ${auth.token}`;
+      else delete config.headers.Authorization;
+    } catch { delete config.headers.Authorization; }
+  }
+  return config;
+});
 const UserProvider = ({ children }) => {
-  const [state, setState] = useState({
-    user: {},
-    token: "",
-  });
-
-  useEffect(() => {
-    setState(JSON.parse(window.localStorage.getItem("auth")));
-  }, []);
-
+  const [state, setState] = useState(null);
+  const [ready, setReady] = useState(false);
   const router = useRouter();
-
-  const token = state && state.token ? state.token : "";
-  axios.defaults.baseURL = process.env.NEXT_PUBLIC_API;
-  axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-
-  axios.interceptors.response.use(
-    function (response) {
-      // Do something before request is sent
-      return response;
-    },
-    function (error) {
-      // Do something with request error
-      let res = error.response;
-      if (res.status === 401 && res.config && !res.config.__isRetryRequest) {
+  useEffect(() => {
+    try { setState(JSON.parse(localStorage.getItem("auth"))); }
+    catch { localStorage.removeItem("auth"); }
+    setReady(true);
+  }, []);
+  useEffect(() => {
+    const responseId = axios.interceptors.response.use(response => response, error => {
+      if (error.response?.status === 401) {
         setState(null);
-        window.localStorage.removeItem("auth");
-        router.push("/login");
+        localStorage.removeItem("auth");
+        router.replace("/login");
       }
-    }
-  );
-
-  return (
-    <UserContext.Provider value={[state, setState]}>
-      {children}
-    </UserContext.Provider>
-  );
+      return Promise.reject(error);
+    });
+    return () => {
+      axios.interceptors.response.eject(responseId);
+    };
+  }, [state?.token, router]);
+  return <UserContext.Provider value={[state, setState, ready]}>{children}</UserContext.Provider>;
 };
-
 export { UserContext, UserProvider };

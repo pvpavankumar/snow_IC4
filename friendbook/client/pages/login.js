@@ -3,7 +3,7 @@
  * @module Login
  */
 
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import Link from "next/link";
@@ -43,12 +43,14 @@ const Login = () => {
       window.localStorage.setItem("auth", JSON.stringify(data));
       router.push("/user/dashboard");
     } catch (err) {
-      toast.error(err.response.data);
+      toast.error(typeof err.response?.data === "string" ? err.response.data : "Unable to connect. Please try again.");
       setLoading(false);
     }
   };
 
-  if (state && state.token) router.push("/");
+  useEffect(() => {
+    if (state?.token) router.replace("/user/dashboard");
+  }, [state?.token, router]);
 
   return (
     <div className="container-fluid">

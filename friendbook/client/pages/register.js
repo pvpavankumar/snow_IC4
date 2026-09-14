@@ -3,7 +3,7 @@
  * @module Register
  */
 
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import AuthForm from "../components/forms/AuthForm";
@@ -48,12 +48,14 @@ const Register = () => {
       setLoading(true);
       toast.success("You have successfully registered.");
     } catch (err) {
-      toast.error(err.response.data);
+      toast.error(typeof err.response?.data === "string" ? err.response.data : "Unable to connect. Please try again.");
       setLoading(false);
     }
   };
 
-  if (state && state.token) router.push("/");
+  useEffect(() => {
+    if (state?.token) router.replace("/user/dashboard");
+  }, [state?.token, router]);
 
   return (
     <div className="container-fluid">
